@@ -65,6 +65,9 @@ folga. Estrutura de descrição que funciona: dor → método por etapas → o q
 |---|---|---|
 | Capa do produto | **600×600**, JPG/PNG, **≤5 MB** | `templates/capa-600.html` |
 | Header área de membros (Club) | **2700×900** | `templates/header-club-2700x900.html` |
+| Capa de módulo do Club (pôster) | **600×900** | `templates/capa-modulo-club-600x900.html` |
+| Banner de divulgação/afiliado | **1200×628** | `templates/banner-afiliado-1200x628.html` |
+| Story (você e afiliados) | **1080×1920** | `templates/story-1080x1920.html` |
 
 Edite as CSS vars (cores da marca) e os textos marcados com `<!-- EDITE -->`, então:
 
@@ -95,7 +98,9 @@ confira o número exibido.
 ### 5. Webhook (se o produto alimenta CRM/automação)
 
 Guia completo com tabela de eventos v2.0.0, anatomia do payload e regras do
-handler: `references/webhook-eventos.md`. Resumo do que não pode errar:
+handler: `references/webhook-eventos.md`. **Handler pronto pra colar** (Supabase
+Edge Function + schema.sql, destilado de produção): `handlers/hotmart-webhook/`.
+Resumo do que não pode errar:
 
 - Versão **2.0.0**, um endpoint pra "Todos os produtos"
 - O endpoint deve responder **200 até no ping vazio** (senão a tela recusa a URL)
@@ -144,6 +149,7 @@ Validar: `hotmart_products_list` (produto no ar?) e, após compra-teste,
 - `references/gerar-assets.md` — método HTML→Chrome headless pros assets
 - `references/webhook-eventos.md` — eventos v2.0.0, payload anotado, regras do handler
 - `references/api-credenciais.md` — credenciais, OAuth, o que a API cobre, MCP
-- `templates/` — capa 600×600 e header 2700×900 prontos pra editar
+- `templates/` — 5 formatos prontos: capa 600×600, header Club 2700×900, módulo 600×900, banner afiliado 1200×628, story 1080×1920
 - `scripts/` — `validar-textos.py` (limites) e `gerar-asset.sh` (assets conferidos)
+- `handlers/hotmart-webhook/` — edge function de referência + schema.sql, pronta pra colar
 - `examples/produto-exemplo/` — produto fictício completo (textos validados + capa gerada)

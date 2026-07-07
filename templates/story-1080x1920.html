@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  TEMPLATE NEUTRO — story de divulgação (1080×1920) pra você e seus afiliados.
+    bash scripts/gerar-asset.sh templates/story-1080x1920.html story.png 1080x1920
+-->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#131013; --fg:#F5F1EA; --accent:#F04E23; --accent2:#FFB800; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--fg);
+       font-family:'Space Grotesk',sans-serif;position:relative;}
+  .glow{position:absolute;top:-300px;right:-300px;width:900px;height:900px;border-radius:50%;
+        background:radial-gradient(closest-side, color-mix(in srgb, var(--accent) 34%, transparent), transparent 70%);}
+  .glow2{position:absolute;bottom:-360px;left:-260px;width:820px;height:820px;border-radius:50%;
+        background:radial-gradient(closest-side, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);}
+  .hair{position:absolute;left:90px;right:90px;height:2px;background:color-mix(in srgb, var(--fg) 12%, transparent);}
+  .wrap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+        padding:0 96px;text-align:left;}
+  .logo{font-size:150px;margin-bottom:56px;}               <!-- EDITE: logo/mascote -->
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;
+        letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:36px;}
+  h1{font-weight:700;font-size:112px;line-height:1.04;letter-spacing:-0.02em;}
+  h1 .g{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;color:transparent;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:26px;letter-spacing:.2em;
+        text-transform:uppercase;opacity:.65;margin-top:44px;line-height:1.7;}
+  .cta{display:inline-block;align-self:flex-start;margin-top:72px;font-family:'JetBrains Mono',monospace;
+        font-size:30px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--bg);background:var(--accent);border-radius:16px;padding:30px 54px;}
+  .foot{position:absolute;bottom:90px;left:96px;right:96px;font-family:'JetBrains Mono',monospace;
+        font-size:20px;letter-spacing:.24em;text-transform:uppercase;opacity:.4;}
+</style>
+</head>
+<body>
+  <div class="glow"></div><div class="glow2"></div>
+  <div class="hair" style="top:80px"></div>
+  <div class="hair" style="bottom:200px"></div>
+  <div class="wrap">
+    <div class="logo">🚀</div>
+    <p class="eyebrow">Nome da marca</p>                         <!-- EDITE -->
+    <h1>A promessa<br>em duas linhas<br><span class="g">com prazo.</span></h1> <!-- EDITE -->
+    <p class="tag">entregável 1 · entregável 2 · garantia X dias</p>           <!-- EDITE -->
+    <span class="cta">Arrasta pra cima ↑</span>                  <!-- EDITE -->
+  </div>
+  <p class="foot">prova social real aqui</p>                     <!-- EDITE -->
+</body>
+</html>

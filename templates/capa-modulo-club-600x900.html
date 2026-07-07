@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  TEMPLATE NEUTRO — capa de módulo do Hotmart Club (600×900, formato pôster).
+  Numere e gere uma por módulo (troque --accent por módulo pra criar a "estante" colorida).
+    bash scripts/gerar-asset.sh templates/capa-modulo-club-600x900.html modulo-01.png 600x900
+-->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#131013; --fg:#F5F1EA; --accent:#F04E23; --accent2:#FFB800; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{width:600px;height:900px;overflow:hidden;background:var(--bg);color:var(--fg);
+       font-family:'Space Grotesk',sans-serif;position:relative;}
+  .glow{position:absolute;top:-200px;right:-200px;width:560px;height:560px;border-radius:50%;
+        background:radial-gradient(closest-side, color-mix(in srgb, var(--accent) 36%, transparent), transparent 70%);}
+  .num{position:absolute;top:52px;left:52px;font-family:'JetBrains Mono',monospace;
+        font-size:150px;font-weight:700;line-height:1;
+        background:linear-gradient(180deg,var(--accent),var(--accent2));
+        -webkit-background-clip:text;color:transparent;}
+  .hair{position:absolute;left:52px;right:52px;height:2px;background:color-mix(in srgb, var(--fg) 14%, transparent);}
+  .body{position:absolute;left:52px;right:52px;bottom:150px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;
+        letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+  h1{font-weight:700;font-size:58px;line-height:1.06;letter-spacing:-0.02em;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.2em;
+        text-transform:uppercase;opacity:.6;margin-top:18px;}
+  .foot{position:absolute;bottom:44px;left:52px;right:52px;display:flex;justify-content:space-between;
+        font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;
+        text-transform:uppercase;opacity:.4;}
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="num">01</div>                                <!-- EDITE: nº do módulo -->
+  <div class="hair" style="bottom:120px"></div>
+  <div class="body">
+    <p class="eyebrow">Módulo um</p>                       <!-- EDITE -->
+    <h1>Nome do módulo<br>direto ao ponto</h1>             <!-- EDITE -->
+    <p class="tag">5 aulas · 1h20 · template incluso</p>   <!-- EDITE -->
+  </div>
+  <div class="foot"><span>Nome do produto</span><span>🚀</span></div> <!-- EDITE -->
+</body>
+</html>

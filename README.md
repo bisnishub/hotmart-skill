@@ -9,6 +9,8 @@
   <img src="https://img.shields.io/badge/PRs-bem--vindos-52B572?style=flat-square" alt="PRs welcome">
 </p>
 
+> 🇺🇸 **[English version](README.en.md)**
+
 # hotmart-produto
 
 **A skill de Claude Code que lança produto na Hotmart do jeito certo.** A API da
@@ -48,7 +50,8 @@ cada dimensão e cada pegadinha foi levantada por **inspeção real do painel**
 | 🔔 `references/webhook-eventos.md` | Webhook v2.0.0 por inteiro: os 16 eventos, payload anotado, dedupe, e o comportamento do botão de teste (que suja seu CRM se você não filtrar) |
 | 🔑 `references/api-credenciais.md` | Credenciais, OAuth, o que a API cobre vs não cobre, e o MCP pra operar a conta conversando |
 | 🖼️ `references/gerar-assets.md` | O método HTML → Chrome headless pra gerar assets pixel-perfect sem designer |
-| 🎨 `templates/` | Capa **600×600** e header do Club **2700×900** prontos — troca as cores da marca e os textos |
+| 🎨 `templates/` | **5 formatos prontos**: capa 600×600, header Club 2700×900, banner de afiliado 1200×628, capa de módulo 600×900 (pôster) e story 1080×1920 — troca 2 variáveis de cor e os textos marcados |
+| 🔌 `handlers/hotmart-webhook/` | **Handler de referência** (Supabase Edge Function destilada de produção): 200 no ping, hottok, log bruto, filtro de eventos de teste, dedupe por transação — com marcadores `// SEU CRM:` onde você pluga. Inclui o `schema.sql` |
 | ⚙️ `scripts/validar-textos.py` | Valida TODOS os textos contra os limites reais (sai vermelho se o painel fosse cortar) |
 | ⚙️ `scripts/gerar-asset.sh` | Fotografa o HTML, **confere as dimensões** e avisa se a capa passa dos 5 MB |
 | 📦 `examples/produto-exemplo/` | Um produto fictício completo: briefing, textos validados e capa gerada — pra ver o resultado antes de usar |
@@ -94,9 +97,11 @@ Pronto. No Claude Code: **"cadastra um produto novo na Hotmart"** — a skill as
 
 - [x] Motor de copywriting por campo e por tipo de produto (`references/copywriting.md`)
 - [x] Instalação assistida do MCP pela própria skill
-- [ ] Templates de asset em mais proporções (banner de afiliado, capa de módulo do Club)
-- [ ] Handler de webhook de referência (Supabase Edge Function) pronto pra colar
-- [ ] Versão EN da documentação
+- [x] Templates em 5 proporções (capa, header Club, banner de afiliado, módulo, story)
+- [x] Handler de webhook de referência (Supabase Edge Function) pronto pra colar
+- [x] Versão EN da documentação ([README.en.md](README.en.md))
+- [ ] Suporte a coprodução/afiliados no fluxo guiado (wizard completo mapeado)
+- [ ] Galeria de capas geradas pela comunidade (mande a sua num PR!)
 
 PRs e issues são bem-vindos — especialmente se o painel mudou e você mapeou a mudança.
 
