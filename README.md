@@ -56,13 +56,22 @@ cada dimensão e cada pegadinha foi levantada por **inspeção real do painel**
 | ⚙️ `scripts/gerar-asset.sh` | Fotografa o HTML, **confere as dimensões** e avisa se a capa passa dos 5 MB |
 | 📦 `examples/produto-exemplo/` | Um produto fictício completo: briefing, textos validados e capa gerada — pra ver o resultado antes de usar |
 
-### O resultado dos templates (gerado pelo próprio script)
+### Veja funcionando
 
 <p align="center">
-  <img src="examples/produto-exemplo/capa-600x600.png" alt="Capa 600×600 do produto de exemplo, gerada por código" width="300">
+  <img src="assets/demo.gif" alt="Demo: 6 capas de nichos diferentes geradas pelo mesmo template" width="720">
 </p>
 
-*Capa do produto de exemplo: template neutro + 4 edições de texto + 1 comando. 64 KB, 600×600 exatos.*
+*Vídeo feito com Remotion mostrando a galeria — que também foi gerada por esta skill.*
+
+### A galeria: 6 nichos, 1 template, 1 comando cada
+
+| | | |
+|---|---|---|
+| ![Podcast](examples/galeria/podcast.png) | ![Inglês](examples/galeria/ingles-reuniao.png) | ![Confeitaria](examples/galeria/confeitaria.png) |
+| ![Tráfego](examples/galeria/trafego-clinicas.png) | ![Violão](examples/galeria/violao.png) | ![Fotografia](examples/galeria/clube-foto.png) |
+
+*Todas em 600×600 exatos, ≤64 KB, conferidas por script. Os `.html` de cada uma estão em `examples/galeria/` — copie o do nicho mais próximo do seu e edite.*
 
 ## Instalar
 

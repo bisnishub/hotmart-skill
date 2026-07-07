@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  TEMPLATE NEUTRO — capa de produto Hotmart (600×600).
+  Edite as CSS vars em :root e os textos marcados. Depois:
+    bash scripts/gerar-asset.sh templates/capa-600.html capa-600x600.png 600x600
+-->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#131013;            /* fundo */
+    --fg:#F5F1EA;            /* texto */
+    --accent:#2D7DFF;        /* cor da marca (troque!) */
+    --accent2:#00E0FF;       /* cor secundária do gradiente */
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{width:600px;height:600px;overflow:hidden;background:var(--bg);color:var(--fg);
+       font-family:'Space Grotesk',sans-serif;position:relative;}
+  .glow{position:absolute;top:-160px;right:-160px;width:480px;height:480px;border-radius:50%;
+        background:radial-gradient(closest-side, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%);}
+  .hair{position:absolute;left:0;right:0;height:1px;background:color-mix(in srgb, var(--fg) 14%, transparent);}
+  .card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+        justify-content:center;text-align:center;padding:0 46px;}
+  .logo{font-size:64px;margin-bottom:26px;}                     /* troque por <img> da sua marca */
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+        letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;}
+  h1{font-weight:700;font-size:56px;line-height:1.05;letter-spacing:-0.02em;}
+  h1 .g{background:linear-gradient(90deg,var(--accent),var(--accent2));
+        -webkit-background-clip:text;color:transparent;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;
+        letter-spacing:.22em;text-transform:uppercase;opacity:.6;margin-top:22px;}
+  .foot{position:absolute;bottom:24px;left:0;right:0;text-align:center;
+        font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;
+        text-transform:uppercase;opacity:.35;}
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="hair" style="top:38px"></div>
+  <div class="hair" style="bottom:56px"></div>
+  <div class="card">
+    <div class="logo">🗣️</div>                                   <!-- EDITE -->
+    <p class="eyebrow">Fluency Lab</p>                     <!-- EDITE -->
+    <h1>Inglês de reunião<br><span class="g">em 90 dias.</span></h1> <!-- EDITE -->
+    <p class="tag">pra executivos sem tempo</p>                      <!-- EDITE -->
+  </div>
+  <p class="foot">aulas de 15 min · método de imersão guiada</p>        <!-- EDITE -->
+</body>
+</html>
