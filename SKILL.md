@@ -28,9 +28,16 @@ Colete do usuário — e AVISE o que trava depois de criado:
 | Categoria/nicho, idioma, país principal | dropdowns simples |
 | Tem área de membros (Club)? | se sim, precisa do header 2700×900 |
 
-### 2. Textos — gerar já DENTRO dos limites e validar por script
+O briefing de copy completo (10 perguntas que extraem a matéria-prima de TODOS os
+textos) está em `references/copywriting.md` — faça junto com esta etapa.
+**Regra inegociável: prova social só com números REAIS do usuário — nunca inventar.**
 
-Escreva cada campo num arquivo da pasta do produto (o usuário só cola no painel):
+### 2. Textos — o agente ESCREVE tudo (não pede pronto) e valida por script
+
+Com o briefing feito, gere TODOS os campos usando os frameworks de
+`references/copywriting.md` (estrutura da descrição com orçamento de caracteres
+por bloco, fórmula das vantagens, padrões de nome, keywords como o comprador
+busca, ajustes por tipo de produto). Grave cada campo num arquivo:
 
 ```
 textos/
@@ -96,12 +103,22 @@ handler: `references/webhook-eventos.md`. Resumo do que não pode errar:
 - O botão de teste dispara 1 evento fictício de CADA tipo (`@example.com`) —
   **filtrar e limpar** leads/membros/produtos de teste depois
 
-### 6. Validação final pela API
+### 6. Validação final pela API (o agente instala o MCP se faltar)
 
-Com o MCP [thaleslaray/hotmart-mcp](https://github.com/thaleslaray/hotmart-mcp)
-instalado (setup em `references/api-credenciais.md`): `hotmart_products_list`
-(produto no ar?) e, após compra-teste, `hotmart_sales_history_list`. Sem MCP:
-conferir no painel.
+A validação usa o MCP [thaleslaray/hotmart-mcp](https://github.com/thaleslaray/hotmart-mcp).
+Se as tools `hotmart_*` não estiverem disponíveis, **ofereça instalar agora** —
+no Claude Code o agente pode rodar direto:
+
+```bash
+claude plugin marketplace add thaleslaray/plugins
+claude plugin install hotmart@thales-plugins
+```
+
+Depois o usuário roda `/hotmart:configure` (credenciais: `references/api-credenciais.md`;
+⚠️ o MCP tem tools de ESCRITA — reembolso, cancelamento — confirmar antes de usar).
+
+Validar: `hotmart_products_list` (produto no ar?) e, após compra-teste,
+`hotmart_sales_history_list`. Sem MCP: conferir no painel.
 
 ## Modo rápido: nova oferta/lote num produto existente
 
@@ -122,6 +139,7 @@ conferir no painel.
 
 ## Arquivos
 
+- `references/copywriting.md` — briefing de 10 perguntas + frameworks de TODOS os textos (descrição por blocos, vantagens, nome, keywords, perfil, ajuste por tipo de produto)
 - `references/painel-cadastro.md` — mapa completo do painel, tela a tela, com URLs
 - `references/gerar-assets.md` — método HTML→Chrome headless pros assets
 - `references/webhook-eventos.md` — eventos v2.0.0, payload anotado, regras do handler

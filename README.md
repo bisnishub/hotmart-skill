@@ -19,11 +19,13 @@ cadastro que não tem improviso.
 
 > 💬 **Você:** "cadastra meu curso novo na Hotmart"
 >
-> 🤖 **Claude:** faz o briefing (e te avisa que o campo *Formato* trava pra
-> sempre), escreve a descrição em ≤2000 caracteres e as vantagens em ≤500
-> (validadas por script, não no olho), gera a capa 600×600 e o header do Club
-> 2700×900 com o design da SUA marca, te guia pelo painel campo a campo, valida
-> o webhook — e no final confere pela API que o produto tá no ar.
+> 🤖 **Claude:** te entrevista com 10 perguntas (e te avisa que o campo *Formato*
+> trava pra sempre), **escreve TODOS os textos** — descrição bloco a bloco em
+> ≤2000 caracteres, vantagens em ≤500, nome, público-alvo, keywords, perfil —
+> validados por script, não no olho; gera a capa 600×600 e o header do Club
+> 2700×900 com o design da SUA marca; te guia pelo painel campo a campo; valida
+> o webhook; **instala o MCP da Hotmart se você ainda não tiver** — e no final
+> confere pela API que o produto tá no ar. Você só respondeu perguntas e clicou.
 
 ## Por que isso existe
 
@@ -40,7 +42,8 @@ cada dimensão e cada pegadinha foi levantada por **inspeção real do painel**
 
 | Peça | O que faz |
 |---|---|
-| 📋 `SKILL.md` | O fluxo completo: briefing → textos → assets → cadastro guiado → webhook → validação por API |
+| 📋 `SKILL.md` | O fluxo completo: briefing → copy → assets → cadastro guiado → webhook → validação por API |
+| ✍️ `references/copywriting.md` | **O motor de copy**: briefing de 10 perguntas + framework de CADA campo — descrição bloco a bloco com orçamento de caracteres, fórmula das vantagens, padrões de nome que vendem, keywords como o comprador busca, ajuste por tipo de produto (curso, comunidade, evento, e-book, SaaS). A IA escreve TUDO; você só revisa os fatos |
 | 🗺️ `references/painel-cadastro.md` | Mapa tela a tela do painel (URLs, campos, limites, o que trava após criação) |
 | 🔔 `references/webhook-eventos.md` | Webhook v2.0.0 por inteiro: os 16 eventos, payload anotado, dedupe, e o comportamento do botão de teste (que suja seu CRM se você não filtrar) |
 | 🔑 `references/api-credenciais.md` | Credenciais, OAuth, o que a API cobre vs não cobre, e o MCP pra operar a conta conversando |
@@ -81,15 +84,19 @@ Pronto. No Claude Code: **"cadastra um produto novo na Hotmart"** — a skill as
   que quebra na primeira mudança de layout. O modo é **guiado**: você clica, a
   IA dita o conteúdo perfeito.
 - ❌ Não substitui o [hotmart-mcp](https://github.com/thaleslaray/hotmart-mcp)
-  do Thales Laray — **complementa**: o MCP opera a conta pela API (vendas,
-  assinaturas, reembolsos); esta skill cobre o cadastro, que a API não alcança.
-  Juntos, fecham o ciclo.
+  do Thales Laray — **complementa e instala**: o MCP opera a conta pela API
+  (vendas, assinaturas, reembolsos); esta skill cobre o cadastro, que a API não
+  alcança. Se você ainda não tem o MCP, a própria skill oferece a instalação
+  (`claude plugin install hotmart@thales-plugins`) e te aponta onde criar as
+  credenciais. Juntos, fecham o ciclo: **a skill lança, o MCP opera.**
 
 ## Roadmap
 
+- [x] Motor de copywriting por campo e por tipo de produto (`references/copywriting.md`)
+- [x] Instalação assistida do MCP pela própria skill
 - [ ] Templates de asset em mais proporções (banner de afiliado, capa de módulo do Club)
-- [ ] Biblioteca de estruturas de descrição por nicho (curso, comunidade, evento, SaaS)
 - [ ] Handler de webhook de referência (Supabase Edge Function) pronto pra colar
+- [ ] Versão EN da documentação
 
 PRs e issues são bem-vindos — especialmente se o painel mudou e você mapeou a mudança.
 
