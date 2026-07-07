@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!--
+  TEMPLATE NEUTRO — header da área de membros / Hotmart Club (2700×900).
+  Edite as CSS vars e os textos. Depois:
+    bash scripts/gerar-asset.sh templates/header-club-2700x900.html header.png 2700x900
+-->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#131013; --fg:#F5F1EA; --accent:#F04E23; --accent2:#FFB800; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{width:2700px;height:900px;overflow:hidden;background:var(--bg);color:var(--fg);
+       font-family:'Space Grotesk',sans-serif;position:relative;}
+  .glow{position:absolute;top:-300px;right:140px;width:1050px;height:1050px;border-radius:50%;
+        background:radial-gradient(closest-side, color-mix(in srgb, var(--accent) 34%, transparent), transparent 70%);}
+  .hair-t{position:absolute;top:66px;left:120px;right:120px;height:2px;background:color-mix(in srgb, var(--fg) 12%, transparent);}
+  .hair-b{position:absolute;bottom:66px;left:120px;right:120px;height:2px;background:color-mix(in srgb, var(--fg) 12%, transparent);}
+  .wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;
+        padding:0 200px 0 170px;}
+  .left{max-width:1600px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;
+        letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
+  h1{font-weight:700;font-size:140px;line-height:1.0;letter-spacing:-0.02em;}
+  h1 .g{background:linear-gradient(90deg,var(--accent),var(--accent2));
+        -webkit-background-clip:text;color:transparent;}
+  .tag{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:500;
+        letter-spacing:.24em;text-transform:uppercase;opacity:.6;margin-top:42px;}
+  .chips{display:flex;gap:24px;margin-top:52px;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;letter-spacing:.12em;
+        text-transform:uppercase;opacity:.85;border:2px solid color-mix(in srgb, var(--fg) 18%, transparent);
+        border-radius:12px;padding:16px 30px;}
+  .chip b{color:var(--accent2);}
+  .logo{font-size:340px;flex-shrink:0;filter:drop-shadow(0 30px 80px color-mix(in srgb, var(--accent) 40%, transparent));}
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="hair-t"></div><div class="hair-b"></div>
+  <div class="wrap">
+    <div class="left">
+      <p class="eyebrow">Nome da marca · Área de membros</p>       <!-- EDITE -->
+      <h1>Bem-vindo ao<br><span class="g">seu produto.</span></h1> <!-- EDITE -->
+      <p class="tag">tagline da comunidade/curso</p>               <!-- EDITE -->
+      <div class="chips">                                          <!-- EDITE ou remova -->
+        <div class="chip"><b>1.000+</b>&nbsp;alunos</div>
+        <div class="chip"><b>4,9★</b>&nbsp;avaliação</div>
+        <div class="chip"><b>50+</b>&nbsp;aulas</div>
+      </div>
+    </div>
+    <div class="logo">🚀</div>                                     <!-- EDITE: logo/mascote -->
+  </div>
+</body>
+</html>

@@ -1,93 +1,131 @@
 ---
 name: hotmart-produto
-description: Use ao CADASTRAR/LANÇAR um produto novo na Hotmart (curso, comunidade, evento, assinatura) — prepara todos os textos nos limites certos e as imagens nas dimensões exatas ANTES de abrir o painel, guia o cadastro tela a tela (com os gotchas do painel) e valida o resultado pela API. Gatilhos: "cadastrar produto na Hotmart", "criar oferta na Hotmart", "lançar na Hotmart", "subir produto na Hotmart".
+description: Use ao CADASTRAR/LANÇAR um produto novo na Hotmart (curso, comunidade, evento, assinatura) ou criar oferta/lote novo — prepara todos os textos nos limites certos e as imagens nas dimensões exatas ANTES de abrir o painel, guia o cadastro tela a tela (com os gotchas do painel), configura o webhook sem sustos e valida o resultado pela API. Gatilhos: "cadastrar produto na Hotmart", "criar oferta na Hotmart", "lançar na Hotmart", "subir produto na Hotmart", "lote novo na Hotmart".
 ---
 
 # Lançar produto na Hotmart (preparação perfeita + cadastro guiado)
 
 A API da Hotmart **não cria produtos** — cadastro é só no painel. O erro clássico é
 abrir o painel sem nada pronto e ir inventando texto no meio do formulário. Esta
-skill inverte: **prepara 100% do material primeiro** (textos dentro dos limites,
-imagens nas medidas exatas), depois guia o cadastro tela a tela sem improviso.
+skill inverte a ordem: **prepara 100% do material primeiro** (textos dentro dos
+limites reais, imagens nas medidas exatas, validados por script), depois guia o
+cadastro tela a tela sem improviso, e fecha o ciclo validando pela API.
 
-## Fluxo
+**Exemplo completo pronto** (briefing → textos → capa gerada): `examples/produto-exemplo/`.
+
+## Fluxo principal (produto novo)
 
 ### 1. Briefing (antes de qualquer coisa)
 
-Colete do usuário — e AVISE que dois campos travam depois de criados:
+Colete do usuário — e AVISE o que trava depois de criado:
 
 | Campo | Observação |
 |---|---|
-| Nome do produto | ⚠️ se houver CRM ligado por webhook, o nome pode ser a chave de roteamento — conferir convenção antes |
-| **Formato** (curso, comunidade, evento, e-book…) | ⚠️ **BLOQUEADO após a criação** — errar = recriar o produto |
-| Preço + parcelamento (1x–12x) | por oferta; dá pra criar múltiplas ofertas/lotes |
+| Nome do produto | ⚠️ se houver CRM ligado por webhook, o nome pode ser a chave de roteamento — conferir a convenção antes |
+| **Formato** (curso, comunidade, evento, e-book…) | ⚠️ **BLOQUEADO após a criação** — errar = recriar o produto do zero |
+| Preço + parcelamento (1x–12x) | por oferta; múltiplas ofertas = lotes |
+| Assinatura ou pagamento único | muda telas disponíveis (ex.: cupons daquela tela são só de assinatura) |
 | Categoria/nicho, idioma, país principal | dropdowns simples |
-| Assinatura ou pagamento único | define quais telas existem (ex.: cupons de assinatura) |
+| Tem área de membros (Club)? | se sim, precisa do header 2700×900 |
 
-### 2. Textos — gerar já DENTRO dos limites
+### 2. Textos — gerar já DENTRO dos limites e validar por script
 
-Escreva tudo em arquivo antes do painel (o usuário só cola). Limites reais do painel:
+Escreva cada campo num arquivo da pasta do produto (o usuário só cola no painel):
 
-| Texto | Limite |
-|---|---|
-| Descrição do produto | **2000 caracteres** |
-| Vantagens (marketplace) | **500 caracteres** |
-| Descrição curta/resumo, público-alvo, palavras-chave, perfil do produtor | sem limite rígido — manter curtos |
+```
+textos/
+├── nome.txt            (recomendado ≤60)
+├── descricao.txt       (LIMITE RÍGIDO: 2000 caracteres)
+├── vantagens.txt       (LIMITE RÍGIDO: 500 caracteres)
+├── publico-alvo.txt    (recomendado ≤300)
+├── palavras-chave.txt  (1 por linha, ≤10)
+└── perfil.txt          (perfil do produtor, recomendado ≤500)
+```
 
-**Valide a contagem por script** (`python3 -c "print(len(open('desc.txt').read()))"`),
-não no olho. Estourou = o painel corta silenciosamente.
+Depois valide — **nunca no olho**:
+
+```bash
+python3 scripts/validar-textos.py textos/
+```
+
+O script aponta o que estourou (o painel corta silenciosamente) e o que está sem
+folga. Estrutura de descrição que funciona: dor → método por etapas → o que recebe
+(bullets) → pra quem é / não é → garantia → fechamento com CTA.
 
 ### 3. Imagens — dimensões exatas, geradas por código
 
-| Asset | Spec |
-|---|---|
-| Imagem do produto (capa) | **600×600 px**, JPG/PNG, **máx 5 MB** |
-| Header da área de membros (Club) | **2700×900 px** |
+| Asset | Spec | Template pronto |
+|---|---|---|
+| Capa do produto | **600×600**, JPG/PNG, **≤5 MB** | `templates/capa-600.html` |
+| Header área de membros (Club) | **2700×900** | `templates/header-club-2700x900.html` |
 
-Método que funciona sem designer: montar um HTML com o design da marca no tamanho
-exato e fotografar com Chrome headless — receita pronta em
-`references/gerar-assets.md`. Sempre conferir dimensão final com `sips -g pixelWidth -g pixelHeight`.
+Edite as CSS vars (cores da marca) e os textos marcados com `<!-- EDITE -->`, então:
+
+```bash
+bash scripts/gerar-asset.sh templates/capa-600.html capa-600x600.png 600x600
+bash scripts/gerar-asset.sh templates/header-club-2700x900.html header.png 2700x900
+```
+
+O script fotografa com Chrome headless, **confere as dimensões** e avisa se a capa
+passou de 5 MB. Detalhes e gotchas do método: `references/gerar-assets.md`.
 
 ### 4. Cadastro guiado no painel
 
-Abra `references/painel-cadastro.md` (mapa tela a tela do painel, com URLs) e
-acompanhe o usuário na ordem: Informações básicas → Preço/ofertas → Checkout →
-Página do produto → (opcional) Afiliados, Coprodução, Cupons, Impostos.
+Abra `references/painel-cadastro.md` (mapa tela a tela com URLs) e conduza na ordem:
 
-**Gotchas do painel (não descobrir na hora):**
-- O conteúdo carrega num **iframe cross-origin** (`app-vlc.hotmart.com`) — automação
-  de browser que lê DOM externo não enxerga dentro; trate automação como best-effort
-  e o modo guiado (humano clica, agente dita) como caminho confiável.
-- **Formato** não muda depois. **Cupons** daquela tela só existem pra assinatura.
-- Checkout: configurar página de agradecimento (URL própria de obrigado converte
-  melhor que a padrão) e métodos de pagamento antes de divulgar.
+1. **Informações básicas** — nome, descrição, FORMATO (conferir 2×!), categoria
+2. **Preço/ofertas** — valor, parcelamento, recuperador de vendas
+3. **Checkout** — métodos de pagamento, dados exigidos, **página de agradecimento**
+   (URL própria converte mais que a padrão)
+4. **Página do produto/Marketplace** — vantagens, público-alvo, keywords, slug
+5. Opcionais: afiliados (wizard 4 etapas), coprodução, cupons (só assinatura), impostos (ESS/não-ESS)
 
-### 5. Integração (se o produto alimenta CRM/automação)
+**Gotchas (não descobrir na hora):** o painel roda num **iframe cross-origin**
+(`app-vlc.hotmart.com`) — automação de browser é best-effort; o caminho confiável
+é o guiado (humano clica, agente dita o que colar). Campos com contador: cole e
+confira o número exibido.
 
-- **Webhook**: Ferramentas → Webhook, versão **2.0.0**, marcar os eventos de compra,
-  reembolso e chargeback no mínimo. O endpoint precisa responder **200 ao ping sem
-  payload** (a validação da tela falha se der 4xx).
-- Teste da Hotmart dispara **um evento de cada tipo marcado** com dados fictícios
-  (`@example.com`, `teste@hotmart.com.br`) — filtrar esses e-mails no processamento
-  e limpar leads/membros de teste depois.
+### 5. Webhook (se o produto alimenta CRM/automação)
+
+Guia completo com tabela de eventos v2.0.0, anatomia do payload e regras do
+handler: `references/webhook-eventos.md`. Resumo do que não pode errar:
+
+- Versão **2.0.0**, um endpoint pra "Todos os produtos"
+- O endpoint deve responder **200 até no ping vazio** (senão a tela recusa a URL)
+- **Dedupe por `purchase.transaction`**; valores vêm **em reais**, não centavos
+- O botão de teste dispara 1 evento fictício de CADA tipo (`@example.com`) —
+  **filtrar e limpar** leads/membros/produtos de teste depois
 
 ### 6. Validação final pela API
 
-Se o MCP da Hotmart estiver instalado (ex.: [thaleslaray/hotmart-mcp](https://github.com/thaleslaray/hotmart-mcp)),
-feche o ciclo: `hotmart_products_list` (produto aparece?) e, após a primeira venda
-ou compra-teste, `hotmart_sales_history_list`. Sem MCP: conferir no painel.
+Com o MCP [thaleslaray/hotmart-mcp](https://github.com/thaleslaray/hotmart-mcp)
+instalado (setup em `references/api-credenciais.md`): `hotmart_products_list`
+(produto no ar?) e, após compra-teste, `hotmart_sales_history_list`. Sem MCP:
+conferir no painel.
+
+## Modo rápido: nova oferta/lote num produto existente
+
+1. `/products/manage/{id}/offers` → **Novo preço** → valor + parcelamento
+2. Cada oferta tem checkout próprio (link distinto) — atualizar o botão da página
+   de vendas pro link do lote novo
+3. Validar: abrir o checkout em aba anônima e conferir valor/parcelas exibidos
 
 ## Checklist de saída
 
-- [ ] Formato certo escolhido (não muda depois)
-- [ ] Descrição ≤2000, vantagens ≤500 — contados por script
-- [ ] Capa 600×600 ≤5MB + header 2700×900 (se tiver Club)
-- [ ] Oferta(s) criada(s) com parcelamento certo
-- [ ] Página de agradecimento apontada no checkout
+- [ ] Formato certo (não muda depois) e nome dentro da convenção do CRM
+- [ ] `validar-textos.py` verde (descrição ≤2000, vantagens ≤500)
+- [ ] Capa 600×600 ≤5MB (+ header 2700×900 se tiver Club) — dimensões conferidas
+- [ ] Oferta(s) com parcelamento certo + checkout testado em aba anônima
+- [ ] Página de agradecimento própria apontada
 - [ ] Webhook 2.0.0 validado + eventos de teste filtrados/limpos
 - [ ] Produto visível via API/painel
 
 ## Arquivos
 
 - `references/painel-cadastro.md` — mapa completo do painel, tela a tela, com URLs
-- `references/gerar-assets.md` — receita HTML→Chrome headless pros assets nas medidas
+- `references/gerar-assets.md` — método HTML→Chrome headless pros assets
+- `references/webhook-eventos.md` — eventos v2.0.0, payload anotado, regras do handler
+- `references/api-credenciais.md` — credenciais, OAuth, o que a API cobre, MCP
+- `templates/` — capa 600×600 e header 2700×900 prontos pra editar
+- `scripts/` — `validar-textos.py` (limites) e `gerar-asset.sh` (assets conferidos)
+- `examples/produto-exemplo/` — produto fictício completo (textos validados + capa gerada)
